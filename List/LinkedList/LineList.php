@@ -30,13 +30,14 @@ class LineList extends AbstractLineList
             echo 'not in range';
             exit;
         }
-        unset($this->list[$key]);
-        var_dump($this->list); exit;
-        $result = [];
-        foreach ($this->list as $k => $v) {
-            $result[] = $this->list[$k];
+        if ($key < count($this->list)) {
+            for ($i = 0; $i < count($this->list); $i++) {
+                if ($i >= $key) {
+                    $this->list[$i] = $this->list[$i + 1]; // 將key 值後面的元素往前遞補
+                }
+            }
         }
-        $this->list = $result;
+        array_pop($this->list); // 刪除最後一個元素，釋放空間
     }
 
     public function insertElement($file, $key)
